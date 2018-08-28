@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "start": "node server/build/",
-    "heroku-postbuild": "(cd ./server && yarn postbuild) && (cd ./client && yarn postbuild)"
+    "heroku-postbuild": "(cd ./server && yarn postpublish) && (cd ./client && yarn postpublish)"
   },
   "cacheDirectories": [
     "server/node_modules",
