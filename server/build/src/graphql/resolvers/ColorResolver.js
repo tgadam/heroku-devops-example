@@ -9,23 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const typeorm_1 = require("typeorm");
 const type_graphql_1 = require("type-graphql");
-let Color = class Color {
+const color_1 = require("../../data-model/entities/color");
+const typeorm_1 = require("typeorm");
+let ColorResolver = class ColorResolver {
+    colors() {
+        const repo = typeorm_1.getRepository(color_1.Color);
+        return repo.find();
+    }
 };
 __decorate([
-    type_graphql_1.Field(type => type_graphql_1.ID),
-    typeorm_1.PrimaryColumn("varchar", { length: 200 }),
-    __metadata("design:type", String)
-], Color.prototype, "code", void 0);
-__decorate([
-    type_graphql_1.Field(),
-    typeorm_1.Column("varchar", { length: 400 }),
-    __metadata("design:type", String)
-], Color.prototype, "name", void 0);
-Color = __decorate([
-    typeorm_1.Entity(),
-    type_graphql_1.ObjectType()
-], Color);
-exports.Color = Color;
-//# sourceMappingURL=color.js.map
+    type_graphql_1.Query(returns => [color_1.Color]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ColorResolver.prototype, "colors", null);
+ColorResolver = __decorate([
+    type_graphql_1.Resolver(color_1.Color)
+], ColorResolver);
+exports.ColorResolver = ColorResolver;
+//# sourceMappingURL=ColorResolver.js.map

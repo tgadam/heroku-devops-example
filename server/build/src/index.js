@@ -11,19 +11,36 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 const graphql_yoga_1 = require("graphql-yoga");
 const typedi_1 = require("typedi");
+const TypeORM = require("typeorm");
 const TypeGraphQL = require("type-graphql");
 const HelloWorldResolver_1 = require("./graphql/resolvers/HelloWorldResolver");
+const ColorResolver_1 = require("./graphql/resolvers/ColorResolver");
 const cors = require("cors");
 const morgan = require("morgan");
 const path = require("path");
 const express = require("express");
 const fs_1 = require("fs");
+const dbmgr_1 = require("@teselagen/dbmgr");
+const lodash_1 = require("lodash");
+const entityMap = require("./data-model/entityMap");
+const dotenv = require("dotenv");
+const envConfigPath = path.resolve(process.cwd(), '.db.env');
+dotenv.config({ path: envConfigPath });
 // register 3rd party IOC container
 TypeGraphQL.useContainer(typedi_1.Container);
-const resolvers = [HelloWorldResolver_1.HelloWorldResolver];
+const resolvers = [HelloWorldResolver_1.HelloWorldResolver, ColorResolver_1.ColorResolver];
 function bootstrap() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const configs = yield dbmgr_1.getConfigs();
+            console.log(configs);
+            const entities = lodash_1.values(entityMap);
+            const connInfo = Object.assign({}, configs.appDbConfig);
+            console.log(connInfo);
+            connInfo.name = "default";
+            connInfo.entities = entities;
+            // create TypeORM connection
+            yield TypeORM.createConnection(connInfo);
             const schema = yield TypeGraphQL.buildSchema({
                 resolvers,
             });

@@ -14,9 +14,9 @@
   dependencies:
     cross-spawn "^5.1.0"
 
-"@teselagen/dbmgr@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@teselagen/dbmgr/-/dbmgr-3.0.0.tgz#7c3f45e9f02686a7a349ad83b0de942f19a27111"
+"@teselagen/dbmgr@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@teselagen/dbmgr/-/dbmgr-4.0.0.tgz#fc69dc2afa229173c31e7b5f9654d876ac3e8764"
   dependencies:
     "@expo/spawn-async" "^1.3.0"
     aws-sdk "^2.293.0"
@@ -56,6 +56,12 @@
   resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.4.tgz#50991a759a29c0b89492751008c6af7a7c8267b0"
   dependencies:
     "@types/express" "*"
+
+"@types/dotenv@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@types/dotenv/-/dotenv-4.0.3.tgz#ebcfc40da7bc0728b705945b7db48485ec5b4b67"
+  dependencies:
+    "@types/node" "*"
 
 "@types/events@*":
   version "1.2.0"
@@ -1399,11 +1405,24 @@ pg-pool@1.*:
     generic-pool "2.4.3"
     object-assign "4.1.0"
 
+pg-pool@~2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-2.0.3.tgz#c022032c8949f312a4f91fb6409ce04076be3257"
+
 pg-types@1.*:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/pg-types/-/pg-types-1.13.0.tgz#75f490b8a8abf75f1386ef5ec4455ecf6b345c63"
   dependencies:
     pg-int8 "1.0.1"
+    postgres-array "~1.0.0"
+    postgres-bytea "~1.0.0"
+    postgres-date "~1.0.0"
+    postgres-interval "^1.1.0"
+
+pg-types@~1.12.1:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/pg-types/-/pg-types-1.12.1.tgz#d64087e3903b58ffaad279e7595c52208a14c3d2"
+  dependencies:
     postgres-array "~1.0.0"
     postgres-bytea "~1.0.0"
     postgres-date "~1.0.0"
@@ -1422,7 +1441,19 @@ pg@^6.0.0:
     pgpass "1.*"
     semver "4.3.2"
 
-pgpass@1.*:
+pg@^7.4.3:
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/pg/-/pg-7.4.3.tgz#f7b6f93f5340ecc2596afbb94a13e3d6b609834b"
+  dependencies:
+    buffer-writer "1.0.1"
+    packet-reader "0.3.1"
+    pg-connection-string "0.1.3"
+    pg-pool "~2.0.3"
+    pg-types "~1.12.1"
+    pgpass "1.x"
+    semver "4.3.2"
+
+pgpass@1.*, pgpass@1.x:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/pgpass/-/pgpass-1.0.2.tgz#2a7bb41b6065b67907e91da1b07c1847c877b306"
   dependencies:
