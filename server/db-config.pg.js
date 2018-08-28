@@ -7,7 +7,7 @@ const appDbName = "devops";
 const appSchema = "app";
 
 
-const config = {
+let config = {
     dbConfig: {
         app: {
             type,
@@ -39,5 +39,20 @@ const config = {
         oraMigSys: oraDbConfig.dbConfig.sys
     }
 };
+
+if (process.env.DATABASE_URL) {
+    config.dbConfig = {
+        app: {
+            type,
+            url: process.env.DATABASE_URL,
+            ssl: true
+        },
+        owner: {
+            type,
+            url: process.env.DATABASE_URL,
+            ssl: true
+        }
+    };
+}
 
 module.exports = config;
