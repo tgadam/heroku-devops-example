@@ -1,0 +1,22 @@
+{
+  "name": "heroku-devops-example",
+  "version": "1.0.0",
+  "description": "Heroku DevOps Example",
+  "main": "server/build/index.js",
+  "repository": "https://github.com/tgadam/heroku-devops-example.git",
+  "author": "Adam Thomas <adam@teselagen.com>",
+  "license": "private",
+  "private": true,
+  "scripts": {
+    "start": "node server/build/",
+    "heroku-postbuild": "(cd ./server && yarn postbuild) && (cd ./client && yarn postbuild)"
+  },
+  "cacheDirectories": [
+    "server/node_modules",
+    "client/node_modules"
+  ],
+  "engines": {
+    "node": "10.0.0",
+    "yarn": "1.9.4"
+  }
+}
