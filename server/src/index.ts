@@ -7,6 +7,7 @@ import * as cors from "cors";
 import * as morgan from "morgan";
 import * as path from "path";
 import * as express from "express";
+import { existsSync } from "fs";
 
 // register 3rd party IOC container
 TypeGraphQL.useContainer(Container);
@@ -28,10 +29,17 @@ async function bootstrap() {
         
         // Configure Express options
         server.express.use(cors());
-        server.express.use(morgan("dev"));
+        server.express.use(morgan("combined"));
 
         if(process.env.NODE_ENV === "production" || process.env.TG_SERVE_CLIENT){
-            server.express.use(express.static(path.resolve(__dirname, "../../client/build")));
+            const rootStaticPath = path.resolve(__dirname, "../../../client/build");
+            console.log(`Serving client from: ${rootStaticPath}`);
+            if(existsSync(path.join(rootStaticPath, "index.html"))){
+                console.log(`index.html found in root static path.`);
+            }else{
+                console.warn(`No index.html found in root static path`);
+            }
+            server.express.use(express.static(rootStaticPath));
         }
 
         // Configure server options
