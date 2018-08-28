@@ -1,1 +1,1 @@
-release: (cd ./server && dbmgr update)
+release: (cd ./server && npx dbmgr update)
