@@ -44,11 +44,13 @@ if (process.env.DATABASE_URL) {
     config.dbConfig = {
         app: {
             type,
+            schema: appSchema,
             url: process.env.DATABASE_URL,
             ssl: true
         },
         owner: {
             type,
+            schema: appSchema,
             url: process.env.DATABASE_URL,
             ssl: true
         }

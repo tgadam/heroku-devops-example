@@ -14,9 +14,9 @@
   dependencies:
     cross-spawn "^5.1.0"
 
-"@teselagen/dbmgr@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@teselagen/dbmgr/-/dbmgr-4.0.0.tgz#fc69dc2afa229173c31e7b5f9654d876ac3e8764"
+"@teselagen/dbmgr@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@teselagen/dbmgr/-/dbmgr-5.0.0.tgz#c907942829fdb45fa596f8674cea72ccb6999d16"
   dependencies:
     "@expo/spawn-async" "^1.3.0"
     aws-sdk "^2.293.0"

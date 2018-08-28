@@ -23,7 +23,7 @@
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\""
   },
   "dependencies": {
-    "@teselagen/dbmgr": "^4.0.0",
+    "@teselagen/dbmgr": "^5.0.0",
     "@types/cors": "^2.8.4",
     "@types/dotenv": "^4.0.3",
     "cors": "^2.8.4",
