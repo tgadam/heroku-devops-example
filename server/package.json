@@ -23,11 +23,16 @@
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\""
   },
   "dependencies": {
+    "@teselagen/dbmgr": "^4.0.0",
     "@types/cors": "^2.8.4",
+    "@types/dotenv": "^4.0.3",
     "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "graphql-yoga": "^1.16.1",
+    "lodash": "^4.17.10",
     "morgan": "^1.9.0",
+    "pg": "^7.4.3",
     "ts-node": "^7.0.1",
     "type-graphql": "^0.13.1",
     "typedi": "^0.8.0",

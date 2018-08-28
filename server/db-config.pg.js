@@ -3,11 +3,11 @@ const oraDbConfig = require('./db-config.ora');
 const host = "localhost";
 const port = 5500;
 const type = "postgres";
-const appDbName = "simple";
+const appDbName = "devops";
 const appSchema = "app";
 
 
-module.exports = {
+let config = {
     dbConfig: {
         app: {
             type,
@@ -38,4 +38,21 @@ module.exports = {
         oraMig: oraDbConfig.dbConfig.owner,
         oraMigSys: oraDbConfig.dbConfig.sys
     }
+};
+
+if (process.env.DATABASE_URL) {
+    config.dbConfig = {
+        app: {
+            type,
+            url: process.env.DATABASE_URL,
+            ssl: true
+        },
+        owner: {
+            type,
+            url: process.env.DATABASE_URL,
+            ssl: true
+        }
+    };
 }
+
+module.exports = config;
