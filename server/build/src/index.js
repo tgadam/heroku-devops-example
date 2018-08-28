@@ -17,6 +17,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const path = require("path");
 const express = require("express");
+const fs_1 = require("fs");
 // register 3rd party IOC container
 TypeGraphQL.useContainer(typedi_1.Container);
 const resolvers = [HelloWorldResolver_1.HelloWorldResolver];
@@ -33,9 +34,17 @@ function bootstrap() {
             const server = new graphql_yoga_1.GraphQLServer({ schema, context });
             // Configure Express options
             server.express.use(cors());
-            server.express.use(morgan("dev"));
-            if (process.env.NODE_ENV === "production") {
-                server.express.use(express.static(path.resolve(__dirname, "../../client/build")));
+            server.express.use(morgan("combined"));
+            if (process.env.NODE_ENV === "production" || process.env.TG_SERVE_CLIENT) {
+                const rootStaticPath = path.resolve(__dirname, "../../../client/build");
+                console.log(`Serving client from: ${rootStaticPath}`);
+                if (fs_1.existsSync(path.join(rootStaticPath, "index.html"))) {
+                    console.log(`index.html found in root static path.`);
+                }
+                else {
+                    console.warn(`No index.html found in root static path`);
+                }
+                server.express.use(express.static(rootStaticPath));
             }
             // Configure server options
             const serverOptions = {
