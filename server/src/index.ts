@@ -30,7 +30,7 @@ async function bootstrap() {
         server.express.use(cors());
         server.express.use(morgan("dev"));
 
-        if(process.env.NODE_ENV === "production"){
+        if(process.env.NODE_ENV === "production" || process.env.TG_SERVE_CLIENT){
             server.express.use(express.static(path.resolve(__dirname, "../../client/build")));
         }
 
