@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require("sqreen");
 require("reflect-metadata");
 const graphql_yoga_1 = require("graphql-yoga");
 const typedi_1 = require("typedi");
