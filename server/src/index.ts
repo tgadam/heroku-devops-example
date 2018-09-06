@@ -17,6 +17,7 @@ import * as entityMap from "./data-model/entityMap";
 import * as dotenv from "dotenv";
 
 const envConfigPath = path.resolve(process.cwd(), '.db.env');
+console.log(`envConfigPath: ${envConfigPath}`);
 dotenv.config({path: envConfigPath });
 // register 3rd party IOC container
 TypeGraphQL.useContainer(Container);
