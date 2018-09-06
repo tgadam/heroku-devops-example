@@ -1,3 +1,4 @@
+import "sqreen";
 import "reflect-metadata";
 import { GraphQLServer, Options } from "graphql-yoga";
 import { Container } from "typedi";
