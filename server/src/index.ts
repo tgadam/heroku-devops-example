@@ -19,14 +19,15 @@ import * as dotenv from "dotenv";
 
 let envConfigPath = "";
 let cwd = process.cwd();
+envConfigPath = path.resolve(cwd, '.db.env');
 
-if(fs.existsSync(path.join(cwd, ".db.env"))){
-    envConfigPath = path.resolve(cwd, '.db.env');
-}else if(fs.existsSync(path.join(cwd, "server/.db.env"))){
-    envConfigPath = path.resolve(cwd, 'server/.db.env');
-}else{
-    throw new Error("Unable to locate .db.env");
-}
+// if(fs.existsSync(path.join(cwd, ".db.env"))){
+//     envConfigPath = path.resolve(cwd, '.db.env');
+// }else if(fs.existsSync(path.join(cwd, "server/.db.env"))){
+//     envConfigPath = path.resolve(cwd, 'server/.db.env');
+// }else{
+//     throw new Error("Unable to locate .db.env");
+// }
 
 console.log(`envConfigPath: ${envConfigPath}`);
 dotenv.config({path: envConfigPath });
