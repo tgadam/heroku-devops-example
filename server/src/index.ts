@@ -73,7 +73,7 @@ async function bootstrap() {
             }else{
                 console.warn(`No index.html found in root static path`);
             }
-            server.express.use(express.static(rootStaticPath));
+            server.express.use(/^\/(?!graphql|playground).*$/, express.static(rootStaticPath));
         }
 
         // Configure server options
