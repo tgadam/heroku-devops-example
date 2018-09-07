@@ -25,7 +25,17 @@ const dbmgr_1 = require("@teselagen/dbmgr");
 const lodash_1 = require("lodash");
 const entityMap = require("./data-model/entityMap");
 const dotenv = require("dotenv");
-const envConfigPath = path.resolve(process.cwd(), '.db.env');
+let envConfigPath = "";
+let cwd = process.cwd();
+envConfigPath = path.resolve(cwd, '.db.env');
+// if(fs.existsSync(path.join(cwd, ".db.env"))){
+//     envConfigPath = path.resolve(cwd, '.db.env');
+// }else if(fs.existsSync(path.join(cwd, "server/.db.env"))){
+//     envConfigPath = path.resolve(cwd, 'server/.db.env');
+// }else{
+//     throw new Error("Unable to locate .db.env");
+// }
+console.log(`envConfigPath: ${envConfigPath}`);
 dotenv.config({ path: envConfigPath });
 // register 3rd party IOC container
 TypeGraphQL.useContainer(typedi_1.Container);
@@ -34,10 +44,10 @@ function bootstrap() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const configs = yield dbmgr_1.getConfigs();
-            console.log(configs);
+            console.log("config", configs);
             const entities = lodash_1.values(entityMap);
             const connInfo = Object.assign({}, configs.appDbConfig);
-            console.log(connInfo);
+            console.log("connInfo", connInfo);
             connInfo.name = "default";
             connInfo.entities = entities;
             // create TypeORM connection
