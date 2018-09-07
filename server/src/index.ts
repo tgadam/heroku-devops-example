@@ -17,8 +17,17 @@ import { values, keys } from "lodash";
 import * as entityMap from "./data-model/entityMap";
 import * as dotenv from "dotenv";
 
-console.log(fs.readdirSync(process.cwd()).join("\n"));
-const envConfigPath = path.resolve(process.cwd(), '.db.env');
+let envConfigPath = "";
+let cwd = process.cwd();
+
+if(fs.existsSync(path.join(cwd, ".db.env"))){
+    envConfigPath = path.resolve(cwd, '.db.env');
+}else if(fs.existsSync(path.join(cwd, "server/.db.env"))){
+    envConfigPath = path.resolve(cwd, 'server/.db.env');
+}else{
+    throw new Error("Unable to locate .db.env");
+}
+
 console.log(`envConfigPath: ${envConfigPath}`);
 dotenv.config({path: envConfigPath });
 // register 3rd party IOC container
