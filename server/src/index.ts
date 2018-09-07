@@ -9,6 +9,7 @@ import { ColorResolver } from "./graphql/resolvers/ColorResolver";
 import * as cors from "cors";
 import * as morgan from "morgan";
 import * as path from "path";
+import * as fs from "fs";
 import * as express from "express";
 import { existsSync } from "fs";
 import { getConfigs } from "@teselagen/dbmgr";
@@ -16,6 +17,7 @@ import { values, keys } from "lodash";
 import * as entityMap from "./data-model/entityMap";
 import * as dotenv from "dotenv";
 
+console.log(fs.readdirSync(process.cwd()).join("\n"));
 const envConfigPath = path.resolve(process.cwd(), '.db.env');
 console.log(`envConfigPath: ${envConfigPath}`);
 dotenv.config({path: envConfigPath });
@@ -27,12 +29,12 @@ async function bootstrap() {
     try {
 
         const configs = await getConfigs();
-        console.log(configs);
+        console.log("config", configs);
         const entities = values(entityMap);
         const connInfo = {
             ...configs.appDbConfig
         };
-        console.log(connInfo);
+        console.log("connInfo", connInfo);
         connInfo.name = "default";
         connInfo.entities = entities;
         // create TypeORM connection
