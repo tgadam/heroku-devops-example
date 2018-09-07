@@ -1,3 +1,4 @@
+import "sqreen";
 import "reflect-metadata";
 import { GraphQLServer, Options } from "graphql-yoga";
 import { Container } from "typedi";
@@ -8,6 +9,7 @@ import { ColorResolver } from "./graphql/resolvers/ColorResolver";
 import * as cors from "cors";
 import * as morgan from "morgan";
 import * as path from "path";
+import * as fs from "fs";
 import * as express from "express";
 import { existsSync } from "fs";
 import { getConfigs } from "@teselagen/dbmgr";
@@ -15,7 +17,19 @@ import { values, keys } from "lodash";
 import * as entityMap from "./data-model/entityMap";
 import * as dotenv from "dotenv";
 
-const envConfigPath = path.resolve(process.cwd(), '.db.env');
+let envConfigPath = "";
+let cwd = process.cwd();
+envConfigPath = path.resolve(cwd, '.db.env');
+
+// if(fs.existsSync(path.join(cwd, ".db.env"))){
+//     envConfigPath = path.resolve(cwd, '.db.env');
+// }else if(fs.existsSync(path.join(cwd, "server/.db.env"))){
+//     envConfigPath = path.resolve(cwd, 'server/.db.env');
+// }else{
+//     throw new Error("Unable to locate .db.env");
+// }
+
+console.log(`envConfigPath: ${envConfigPath}`);
 dotenv.config({path: envConfigPath });
 // register 3rd party IOC container
 TypeGraphQL.useContainer(Container);
@@ -25,12 +39,12 @@ async function bootstrap() {
     try {
 
         const configs = await getConfigs();
-        console.log(configs);
+        console.log("config", configs);
         const entities = values(entityMap);
         const connInfo = {
             ...configs.appDbConfig
         };
-        console.log(connInfo);
+        console.log("connInfo", connInfo);
         connInfo.name = "default";
         connInfo.entities = entities;
         // create TypeORM connection
@@ -59,7 +73,7 @@ async function bootstrap() {
             }else{
                 console.warn(`No index.html found in root static path`);
             }
-            server.express.use(express.static(rootStaticPath));
+            server.express.use(/^\/(?!graphql|playground).*$/, express.static(rootStaticPath));
         }
 
         // Configure server options
