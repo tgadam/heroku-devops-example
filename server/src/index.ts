@@ -94,7 +94,7 @@ async function bootstrap() {
             } else {
                 console.warn(`No index.html found in root static path`);
             }
-            app.use(express.static(rootStaticPath));
+            app.use("/", express.static(rootStaticPath));
         }
         return new Promise((resolve, reject) => {
             try {
