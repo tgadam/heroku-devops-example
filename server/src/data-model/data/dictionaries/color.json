@@ -10,5 +10,9 @@
     {
         "code": "GREEN",
         "name": "Green"
+    },
+    {
+        "code": "YELLOW",
+        "name": "Yellow"
     }
 ]
