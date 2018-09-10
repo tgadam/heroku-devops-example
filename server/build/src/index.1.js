@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 require("sqreen");
 require("reflect-metadata");
-const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
+const graphql_yoga_1 = require("graphql-yoga");
 const typedi_1 = require("typedi");
 const TypeORM = require("typeorm");
 const TypeGraphQL = require("type-graphql");
@@ -20,7 +20,6 @@ const cors = require("cors");
 const morgan = require("morgan");
 const path = require("path");
 const express = require("express");
-const bodyParser = require("body-parser");
 const fs_1 = require("fs");
 const dbmgr_1 = require("@teselagen/dbmgr");
 const lodash_1 = require("lodash");
@@ -59,18 +58,11 @@ function bootstrap() {
             // create mocked context
             // const context: Context = { user: defaultUser };
             const context = { user: { name: "defaultUser", id: 1 } };
-            const app = express();
+            // Create GraphQL server
+            const server = new graphql_yoga_1.GraphQLServer({ schema, context });
             // Configure Express options
-            if (!(process.env.NODE_ENV === "production" || process.env.TG_SERVE_CLIENT)) {
-                app.use(cors());
-            }
-            app.use(morgan("combined"));
-            app.use('/graphql', bodyParser.json(), (req, res, next) => {
-                return graphqlExpress({ schema, context: { req: req } })(req, res, next);
-            });
-            app.use('/graphiql', graphiqlExpress({
-                endpointURL: `/graphql`
-            }));
+            server.express.use(cors());
+            server.express.use(morgan("combined"));
             if (process.env.NODE_ENV === "production" || process.env.TG_SERVE_CLIENT) {
                 const rootStaticPath = path.resolve(__dirname, "../../../client/build");
                 console.log(`Serving client from: ${rootStaticPath}`);
@@ -80,30 +72,23 @@ function bootstrap() {
                 else {
                     console.warn(`No index.html found in root static path`);
                 }
-                app.use(express.static(rootStaticPath));
+                server.express.use(express.static(rootStaticPath));
             }
-            return new Promise((resolve, reject) => {
-                try {
-                    const port = process.env.PORT || 4000;
-                    const server = app.listen(port, function (err) {
-                        if (err) {
-                            reject(err);
-                        }
-                        console.log(`Serving app at http://localhost:${port}.`);
-                        resolve(app);
-                    });
-                    app.set("server", server); //set the server on app so we can programatically call server.close() later in tests
-                }
-                catch (err) {
-                    reject(err);
-                }
+            // Configure server options
+            const serverOptions = {
+                port: process.env.PORT || 4000,
+                endpoint: "/graphql",
+                playground: "/playground",
+            };
+            // Start the server
+            server.start(serverOptions, ({ port, playground }) => {
+                console.log(`Server is running, GraphQL Playground available at http://localhost:${port}${playground}`);
             });
         }
         catch (err) {
             console.error(err);
         }
-        return null;
     });
 }
 bootstrap();
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.1.js.map
